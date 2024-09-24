@@ -1,5 +1,6 @@
 package com.library.managment.library_managment_sistem.controller;
 
+import com.library.managment.library_managment_sistem.Dto.BookDto;
 import com.library.managment.library_managment_sistem.entity.Book;
 import com.library.managment.library_managment_sistem.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +18,32 @@ public class BookController {
     private BookService bookService;
 
     @PostMapping
-    public ResponseEntity<Book> addBook(@RequestBody Book book) {
-        return new ResponseEntity<>(bookService.addBook(book), HttpStatus.CREATED);
+    public ResponseEntity<BookDto> addBook(@RequestBody BookDto bookDto) {
+        BookDto savedBookDto = bookService.addBook(bookDto);
+        return new ResponseEntity<>(savedBookDto, HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public List<Book> listBooks() {
-        return bookService.listBooks();
-    }
-
+//    @GetMapping
+//    public List<Book> listBooks() {
+//        return bookService.listBooks();
+//    }
+@GetMapping
+public ResponseEntity<List<BookDto>> listBooks() {
+    List<BookDto> books = bookService.listBooks();
+    return new ResponseEntity<>(books, HttpStatus.OK);
+}
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
     @PutMapping("/{id}")
-    public Book updateBook(@PathVariable Long id, @RequestBody Book updatedBook) {
-        return bookService.updateBook(id, updatedBook);
+    public ResponseEntity<BookDto> updateBook(@PathVariable Long id, @RequestBody BookDto bookDto) {
+        BookDto updatedBookDto = bookService.updateBook(id, bookDto);
+        return new ResponseEntity<>(updatedBookDto, HttpStatus.OK);
     }
+//    @PutMapping("/{id}")
+//    public Book updateBook(@PathVariable Long id, @RequestBody Book updatedBook) {
+//        return bookService.updateBook(id, updatedBook);
+//    }
 }

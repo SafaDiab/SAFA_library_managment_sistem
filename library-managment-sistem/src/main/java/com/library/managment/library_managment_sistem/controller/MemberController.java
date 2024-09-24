@@ -1,6 +1,7 @@
 package com.library.managment.library_managment_sistem.controller;
 
 
+import com.library.managment.library_managment_sistem.Dto.MemberDto;
 import com.library.managment.library_managment_sistem.entity.Member;
 import com.library.managment.library_managment_sistem.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,20 @@ public class MemberController {
         return new ResponseEntity<>(memberService.addMember(member), HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public List<Member> listMembers() {
-        return memberService.listMembers();
-    }
-
+//    @GetMapping
+//    public List<Member> listMembers() {
+//        return memberService.listMembers();
+//    }555555g
+@GetMapping
+public ResponseEntity<List<MemberDto>> getAllMembers() {
+    List<MemberDto> members = memberService.listMembers();
+    return new ResponseEntity<>(members, HttpStatus.OK);
+}///kllllllll
+//    @GetMapping("/{id}")
+//    public ResponseEntity<MemberDto> getMemberById(@PathVariable Long id) {
+//        MemberDto member = memberService.getMemberById(id);
+//        return new ResponseEntity<>(member, HttpStatus.OK);
+//    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
         memberService.deleteMember(id);

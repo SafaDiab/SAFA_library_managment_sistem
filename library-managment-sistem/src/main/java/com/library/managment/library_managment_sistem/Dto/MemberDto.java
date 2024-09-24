@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class MemberDto {
     private Long id;
     private String name;
-    private String email;
+
 }

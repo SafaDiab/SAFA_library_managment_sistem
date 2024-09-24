@@ -1,5 +1,6 @@
 package com.library.managment.library_managment_sistem.controller;
 
+import com.library.managment.library_managment_sistem.Dto.BorrowingDto;
 import com.library.managment.library_managment_sistem.entity.Borrowing;
 import com.library.managment.library_managment_sistem.service.BorrowingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,23 +18,38 @@ public class BorrowingController {
     private BorrowingService borrowingService;
 
     @PostMapping
-    public ResponseEntity<Borrowing> borrowBorrowing(@RequestBody Borrowing borrowing) { Borrowing savedBorrowing = borrowingService.borrowBook(borrowing);
-        return new ResponseEntity<>(savedBorrowing, HttpStatus.CREATED);
+    public ResponseEntity<BorrowingDto> borrowBook(@RequestBody BorrowingDto borrowingDTO) {
+        BorrowingDto newBorrowing = borrowingService.borrowBook(borrowingDTO);
+        return new ResponseEntity<>(newBorrowing, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public List<Borrowing> listBorrowings() {
-        return borrowingService.listBorrowings();
+    public ResponseEntity<List<BorrowingDto>> getAllBorrowings() {
+        List<BorrowingDto> borrowings = borrowingService.listBorrowings();
+        return new ResponseEntity<>(borrowings, HttpStatus.OK);
     }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Void> deleteBorrowing(@PathVariable Long id) {
+//        borrowingService.deleteBorrowing(id);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
+//
+//    @PutMapping("/{id}")
+//    public Borrowing updateBorrowing(@PathVariable Long id, @RequestBody Borrowing updatedBorrowing) {
+//        return borrowingService.updateBorrowing(id, updatedBorrowing);
+//    }
+//
+//}
+@PutMapping("/{id}")
+public ResponseEntity<BorrowingDto> updateBorrowing(@PathVariable Long id, @RequestBody BorrowingDto borrowingDTO) {
+    BorrowingDto updatedBorrowing = borrowingService.updateBorrowing(id, borrowingDTO);
+    return new ResponseEntity<>(updatedBorrowing, HttpStatus.OK);
+}
+
+    // حذف استعارة
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBorrowing(@PathVariable Long id) {
         borrowingService.deleteBorrowing(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
-    @PutMapping("/{id}")
-    public Borrowing updateBorrowing(@PathVariable Long id, @RequestBody Borrowing updatedBorrowing) {
-        return borrowingService.updateBorrowing(id, updatedBorrowing);
-    }
-
 }

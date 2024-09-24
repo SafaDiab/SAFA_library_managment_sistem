@@ -14,9 +14,9 @@ import java.time.LocalDate;
 public class BorrowingDto {
     private Long id;
 
-    private Member member;
+    private MemberDto member;
 
-    private Book book;
+    private BookDto book;
 
     private LocalDate borrowDate;
     private LocalDate returnDate;
