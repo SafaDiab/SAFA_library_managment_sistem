@@ -13,5 +13,5 @@ public class MemberDto {
 
     private String name;
 
-    private  int age;
+    private  Integer age;
 }
