@@ -1,6 +1,6 @@
 package com.library.managment.library_managment_sistem.service;
 
-import com.library.managment.library_managment_sistem.Dto.BorrowingDto;
+import com.library.managment.library_managment_sistem.dto.BorrowingDto;
 import com.library.managment.library_managment_sistem.entity.Book;
 import com.library.managment.library_managment_sistem.entity.Borrowing;
 import com.library.managment.library_managment_sistem.entity.Member;
@@ -9,6 +9,8 @@ import com.library.managment.library_managment_sistem.repositry.BookRepository;
 import com.library.managment.library_managment_sistem.repositry.BorrowingRepository;
 import com.library.managment.library_managment_sistem.repositry.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,55 +33,13 @@ public class BorrowingService {
     private BorrowingMapper borrowingMapper;
 
 
+
     public List<BorrowingDto> listBorrowings() {
-        // استخدام المابر لتحويل قائمة الاستعارات إلى قائمة من DTOs
         return borrowingRepository.findAll().stream()
                 .map(borrowingMapper::borrowingToBorrowingDTO)
                 .collect(Collectors.toList());
     }
-//    public Borrowing borrowBook(Borrowing borrowing) {
-//        if (!borrowing.getBook().getIsAvailable()) {
-//            throw new IllegalStateException("Book is not available for borrowing");
-//        }
-//        borrowing.getBook().setIsAvailable(false);
-//        return borrowingRepository.save(borrowing);
-//    }
-//    public Borrowing borrowBook(Borrowing borrowing) {
-//
-//        Book book = bookRepository.findById(borrowing.getBook().getId())
-//                .orElseThrow(() -> new IllegalArgumentException("Book not found"));
-//        Member member = memberRepository.findById(borrowing.getMember().getId())
-//                .orElseThrow(() -> new IllegalArgumentException("Member not found"));
-//        if (!book.getIsAvailable()) {
-//            throw new IllegalStateException("The book is not available for borrowing");
-//        }
-//
-//
-//        book.setIsAvailable(false);
-//        bookRepository.save(book);
-//
-//        borrowing.setMember(member);
-//        borrowing.setBook(book);
-//        return borrowingRepository.save(borrowing);
-//    }
-//
-//    public void deleteBorrowing(Long id) {
-//        Borrowing existingBorrowing =borrowingRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Book Not Found"));
-//        borrowingRepository.deleteById(id);
-//
-//    }
-//
-//    public Borrowing updateBorrowing(Long id, Borrowing updateBorrowing) {
-//        Borrowing existingBorrowing =borrowingRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Boooooo*oolpl Not Found"));
-//        existingBorrowing.setBook(updateBorrowing.getBook());
-//        existingBorrowing.setBorrowDate(updateBorrowing.getBorrowDate());
-//        existingBorrowing.setMember(updateBorrowing.getMember());
-//        existingBorrowing.setReturnDate(updateBorrowing.getReturnDate());
-//
-//        return borrowingRepository.save(existingBorrowing);
-//    }
-//
-//}
+
 public BorrowingDto borrowBook(BorrowingDto borrowingDTO) {
 
     Book book = bookRepository.findById(borrowingDTO.getBook().getId())
@@ -94,12 +54,12 @@ public BorrowingDto borrowBook(BorrowingDto borrowingDTO) {
     book.setIsAvailable(false);
     bookRepository.save(book);
 
-    Borrowing borrowing = borrowingMapper.borrowingDTOToBorrowing(borrowingDTO); // تحويل DTO إلى كيان
+    Borrowing borrowing = borrowingMapper.borrowingDTOToBorrowing(borrowingDTO);
     borrowing.setMember(member);
     borrowing.setBook(book);
 
     borrowing = borrowingRepository.save(borrowing);
-    return borrowingMapper.borrowingToBorrowingDTO(borrowing); // تحويل الكيان إلى DTO عند الإرجاع
+    return borrowingMapper.borrowingToBorrowingDTO(borrowing);
 }
 
     public void deleteBorrowing(Long id) {
@@ -112,11 +72,11 @@ public BorrowingDto borrowBook(BorrowingDto borrowingDTO) {
         Borrowing existingBorrowing = borrowingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Borrowing not found"));
 
-        // استخدام المابر لتحديث البيانات من DTO إلى الكيان
+
         Borrowing updatedBorrowing = borrowingMapper.borrowingDTOToBorrowing(updateBorrowingDTO);
-        updatedBorrowing.setId(id);  // تأكد من تحديث المعرف
+        updatedBorrowing.setId(id);
 
         updatedBorrowing = borrowingRepository.save(updatedBorrowing);
-        return borrowingMapper.borrowingToBorrowingDTO(updatedBorrowing); // إرجاع الكيان المحدث كـ DTO
+        return borrowingMapper.borrowingToBorrowingDTO(updatedBorrowing);
     }
 }

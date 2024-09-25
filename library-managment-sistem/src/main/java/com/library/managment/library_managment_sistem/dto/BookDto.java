@@ -1,4 +1,4 @@
-package com.library.managment.library_managment_sistem.Dto;
+package com.library.managment.library_managment_sistem.dto;
 
 
 import lombok.AllArgsConstructor;

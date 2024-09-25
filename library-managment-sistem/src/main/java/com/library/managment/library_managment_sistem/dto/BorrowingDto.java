@@ -1,7 +1,5 @@
-package com.library.managment.library_managment_sistem.Dto;
+package com.library.managment.library_managment_sistem.dto;
 
-import com.library.managment.library_managment_sistem.entity.Book;
-import com.library.managment.library_managment_sistem.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

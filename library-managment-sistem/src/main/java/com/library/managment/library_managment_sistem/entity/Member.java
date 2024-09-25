@@ -20,5 +20,9 @@ public class Member {
     @NotBlank
     private String email;
 
+
+    @NotBlank
+    private Integer age;
+
 }
 

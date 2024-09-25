@@ -1,7 +1,6 @@
 package com.library.managment.library_managment_sistem.controller;
 
-import com.library.managment.library_managment_sistem.Dto.BookDto;
-import com.library.managment.library_managment_sistem.entity.Book;
+import com.library.managment.library_managment_sistem.dto.BookDto;
 import com.library.managment.library_managment_sistem.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,10 +22,6 @@ public class BookController {
         return new ResponseEntity<>(savedBookDto, HttpStatus.CREATED);
     }
 
-//    @GetMapping
-//    public List<Book> listBooks() {
-//        return bookService.listBooks();
-//    }
 @GetMapping
 public ResponseEntity<List<BookDto>> listBooks() {
     List<BookDto> books = bookService.listBooks();

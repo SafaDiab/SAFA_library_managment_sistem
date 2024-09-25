@@ -1,6 +1,6 @@
 package com.library.managment.library_managment_sistem.service;
 
-import com.library.managment.library_managment_sistem.Dto.MemberDto;
+import com.library.managment.library_managment_sistem.dto.MemberDto;
 import com.library.managment.library_managment_sistem.entity.Member;
 import com.library.managment.library_managment_sistem.mapper.MemberMapper;
 import com.library.managment.library_managment_sistem.repositry.MemberRepository;
@@ -27,10 +27,8 @@ public class MemberService {
         logger.info("Adding member: {}", member.getName());
         return memberRepository.save(member);
     }
-//6
 
     public List<MemberDto> listMembers() {
-        // تحويل الكيانات إلى DTO وإرجاع القائمة بدون البريد الإلكتروني
         return memberRepository.findAll()
                 .stream()
                 .map(memberMapper::toDto)
@@ -45,7 +43,7 @@ public class MemberService {
 Member existingMember =memberRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Member Not Found"));
 existingMember.setName(updatedMember.getName());
 existingMember.setEmail(updatedMember.getEmail());
+existingMember.setAge(updatedMember.getAge());
 return memberRepository.save(existingMember);
     }
-
 }
