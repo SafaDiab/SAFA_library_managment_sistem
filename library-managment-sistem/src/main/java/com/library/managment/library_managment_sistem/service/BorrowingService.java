@@ -1,5 +1,6 @@
 package com.library.managment.library_managment_sistem.service;
 
+import com.library.managment.library_managment_sistem.dto.BookDto;
 import com.library.managment.library_managment_sistem.dto.BorrowingDto;
 import com.library.managment.library_managment_sistem.entity.Book;
 import com.library.managment.library_managment_sistem.entity.Borrowing;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+
 @Service
 public class BorrowingService {
 
@@ -32,8 +35,6 @@ public class BorrowingService {
     @Autowired
     private BorrowingMapper borrowingMapper;
 
-
-
     public List<BorrowingDto> listBorrowings() {
         return borrowingRepository.findAll().stream()
                 .map(borrowingMapper::borrowingToBorrowingDTO)
@@ -42,10 +43,16 @@ public class BorrowingService {
 
 public BorrowingDto borrowBook(BorrowingDto borrowingDTO) {
 
-    Book book = bookRepository.findById(borrowingDTO.getBook().getId())
-            .orElseThrow(() -> new IllegalArgumentException("Book not found"));
-    Member member = memberRepository.findById(borrowingDTO.getMember().getId())
-            .orElseThrow(() -> new IllegalArgumentException("Member not found"));
+    Book book = bookRepository.findById(borrowingDTO.getBook().getId()).orElse(null);
+    Member member = memberRepository.findById(borrowingDTO.getMember().getId()).orElse(null);
+
+    if (book == null && member == null) {
+        throw new IllegalArgumentException("Both book and member not found");
+    } else if (book == null) {
+        throw new IllegalArgumentException("Book not found");
+    } else if (member == null) {
+        throw new IllegalArgumentException("Member not found");
+    }
 
     if (!book.getIsAvailable()) {
         throw new IllegalStateException("The book is not available for borrowing");
@@ -61,6 +68,12 @@ public BorrowingDto borrowBook(BorrowingDto borrowingDTO) {
     borrowing = borrowingRepository.save(borrowing);
     return borrowingMapper.borrowingToBorrowingDTO(borrowing);
 }
+
+    public BorrowingDto getBorrowingById(Long id) {
+        Borrowing borrowing = borrowingRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Borrowing not found with id: " + id));
+        return borrowingMapper.borrowingToBorrowingDTO(borrowing);
+    }
 
     public void deleteBorrowing(Long id) {
         Borrowing existingBorrowing = borrowingRepository.findById(id)

@@ -1,6 +1,8 @@
 package com.library.managment.library_managment_sistem.service;
 
+import com.library.managment.library_managment_sistem.dto.BookDto;
 import com.library.managment.library_managment_sistem.dto.MemberDto;
+import com.library.managment.library_managment_sistem.entity.Book;
 import com.library.managment.library_managment_sistem.entity.Member;
 import com.library.managment.library_managment_sistem.mapper.MemberMapper;
 import com.library.managment.library_managment_sistem.repositry.MemberRepository;
@@ -33,6 +35,11 @@ public class MemberService {
                 .stream()
                 .map(memberMapper::toDto)
                 .collect(Collectors.toList());
+    }
+    public MemberDto getMemberById(Long id) {
+        Member member = memberRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Member not found with id: " + id));
+        return memberMapper.toDto(member);
     }
 
     public void deleteMember(Long id) {

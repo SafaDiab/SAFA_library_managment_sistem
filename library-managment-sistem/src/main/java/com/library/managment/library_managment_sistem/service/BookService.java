@@ -34,8 +34,14 @@ public class BookService {
         Book savedBook = bookRepository.save(book);
         return bookMapper.bookToBookDto(savedBook);
     }
+    public BookDto getBookById(Long id) {
+        Book book = bookRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
+        return bookMapper.bookToBookDto(book);
+    }
 
-public List<BookDto> listBooks() {
+
+    public List<BookDto> listBooks() {
     return bookRepository.findAll()
             .stream()
             .map(bookMapper::bookToBookDto)

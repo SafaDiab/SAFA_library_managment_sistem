@@ -11,27 +11,23 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-        @ExceptionHandler(IllegalStateException.class)
-        public ResponseEntity<String> handleIllegalStateException(IllegalStateException ex) {
-            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-        }
-        @ExceptionHandler(IllegalArgumentException.class)
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<String> handleIllegalStateException(IllegalStateException ex) {
+        return new ResponseEntity<>("Invalid request: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalStateException(IllegalArgumentException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("Request not found:" + ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception ex) {
-        return new ResponseEntity<>("An error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return new ResponseEntity<>("An error occurred(Internal Server Error): " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleNotFoundException(EntityNotFoundException ex) {
         return new ResponseEntity<>("Entity not found: " + ex.getMessage(), HttpStatus.NOT_FOUND);
     }
-//    @ExceptionHandler(IllegalStateException.class)
-//    public ResponseEntity<String> handleIllegalState(IllegalStateException ex) {
-//        return new ResponseEntity<>("Operation not allowed: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
-//    }
-
 }

@@ -28,17 +28,16 @@ public ResponseEntity<List<MemberDto>> getAllMembers() {
     List<MemberDto> members = memberService.listMembers();
     return new ResponseEntity<>(members, HttpStatus.OK);
 }
-//    @GetMapping("/{id}")
-//    public ResponseEntity<MemberDto> getMemberById(@PathVariable Long id) {
-//        MemberDto member = memberService.getMemberById(id);
-//        return new ResponseEntity<>(member, HttpStatus.OK);
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<MemberDto> getMemberById(@PathVariable Long id) {
+        MemberDto member = memberService.getMemberById(id);
+        return new ResponseEntity<>(member, HttpStatus.OK);
+    }
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteMember(@PathVariable Long id) {
         memberService.deleteMember(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-//hugugjkkhjköööö
     @PutMapping("/{id}")
     public Member updateMember(@PathVariable Long id, @RequestBody Member updatedMember) {
         return memberService.updateMember(id, updatedMember);

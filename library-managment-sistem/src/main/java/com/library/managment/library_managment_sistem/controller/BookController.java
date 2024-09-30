@@ -27,6 +27,13 @@ public ResponseEntity<List<BookDto>> listBooks() {
     List<BookDto> books = bookService.listBooks();
     return new ResponseEntity<>(books, HttpStatus.OK);
 }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BookDto> getBookById(@PathVariable Long id) {
+        BookDto bookDto = bookService.getBookById(id);
+        return new ResponseEntity<>(bookDto, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
