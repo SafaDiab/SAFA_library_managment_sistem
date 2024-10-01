@@ -2,6 +2,7 @@ package com.library.managment.library_managment_sistem.controller;
 
 
 import com.library.managment.library_managment_sistem.dto.MemberDto;
+import com.library.managment.library_managment_sistem.entity.Book;
 import com.library.managment.library_managment_sistem.entity.Member;
 import com.library.managment.library_managment_sistem.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,13 @@ public class MemberController {
     public ResponseEntity<Member> addMember(@RequestBody Member member) {
         return new ResponseEntity<>(memberService.addMember(member), HttpStatus.CREATED);
     }
-
+    @GetMapping("/search")
+    public ResponseEntity<List<Member>> searchMembers(    @RequestParam(required = false) String name,
+                                                          @RequestParam(required = false) Integer age)
+    {
+        List<Member> members = memberService.searchMembers(name,age);
+        return ResponseEntity.ok(members);
+    }
 @GetMapping
 public ResponseEntity<List<MemberDto>> getAllMembers() {
     List<MemberDto> members = memberService.listMembers();

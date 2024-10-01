@@ -1,6 +1,5 @@
 package com.library.managment.library_managment_sistem.service;
 
-import com.library.managment.library_managment_sistem.dto.BookDto;
 import com.library.managment.library_managment_sistem.dto.BorrowingDto;
 import com.library.managment.library_managment_sistem.entity.Book;
 import com.library.managment.library_managment_sistem.entity.Borrowing;
@@ -10,18 +9,17 @@ import com.library.managment.library_managment_sistem.repositry.BookRepository;
 import com.library.managment.library_managment_sistem.repositry.BorrowingRepository;
 import com.library.managment.library_managment_sistem.repositry.MemberRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
 
+    @Slf4j
+    @Service
 
-@Service
-public class BorrowingService {
+    public class BorrowingService {
 
     @Autowired
     private BorrowingRepository borrowingRepository;
@@ -29,13 +27,14 @@ public class BorrowingService {
     @Autowired
     private MemberRepository memberRepository;
 
-@Autowired
+    @Autowired
     private BookRepository bookRepository;
 
     @Autowired
     private BorrowingMapper borrowingMapper;
 
     public List<BorrowingDto> listBorrowings() {
+        log.info("Get a Lİst of all Borrowings");
         return borrowingRepository.findAll().stream()
                 .map(borrowingMapper::borrowingToBorrowingDTO)
                 .collect(Collectors.toList());
@@ -76,12 +75,14 @@ public BorrowingDto borrowBook(BorrowingDto borrowingDTO) {
     }
 
     public void deleteBorrowing(Long id) {
+        log.warn("Deleting Borrowing with ID: {}", id);
         Borrowing existingBorrowing = borrowingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Borrowing not found"));
         borrowingRepository.deleteById(id);
     }
 
     public BorrowingDto updateBorrowing(Long id, BorrowingDto updateBorrowingDTO) {
+        log.info("Updating Borrowing with ID: {}", id);
         Borrowing existingBorrowing = borrowingRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Borrowing not found"));
 
