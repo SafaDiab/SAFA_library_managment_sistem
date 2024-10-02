@@ -32,12 +32,14 @@ public class BookService {
         log.info("Adding a new book: {}", bookDto.getTitle());
         Book book = bookMapper.bookDtoToBook(bookDto);
         Book savedBook = bookRepository.save(book);
+       // book.setCategory(bookDto.getCategory());
         return bookMapper.bookToBookDto(savedBook);
     }
     public BookDto getBookById(Long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
         return bookMapper.bookToBookDto(book);
+
     }
 
     public List<BookDto> listBooks() {
@@ -62,6 +64,7 @@ public class BookService {
         existingBook.setAuthor(updatedBookDto.getAuthor());
         existingBook.setTitle(updatedBookDto.getTitle());
         existingBook.setIsAvailable(updatedBookDto.getIsAvailable());
+        existingBook.setCategory(updatedBookDto.getCategory());
 
         Book updatedBook = bookRepository.save(existingBook);
         return bookMapper.bookToBookDto(updatedBook);

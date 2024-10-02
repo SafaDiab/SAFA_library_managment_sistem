@@ -1,6 +1,8 @@
 package com.library.managment.library_managment_sistem.dto;
 
 
+import com.library.managment.library_managment_sistem.entity.Category;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -10,6 +12,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Valid
+
 public class BookDto {
 
     private Long id;
@@ -22,4 +26,6 @@ public class BookDto {
     @Size(min = 2, max = 50, message = "Author must be between 2 and 50 characters")
     private String author;
     private Boolean isAvailable;
+    private Category category;
+
 }

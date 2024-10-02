@@ -1,9 +1,6 @@
 package com.library.managment.library_managment_sistem.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+
 
 public class Book {
     @Id
@@ -27,5 +25,9 @@ public class Book {
 
     private Boolean isAvailable = true;
 
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
 }
+
 
