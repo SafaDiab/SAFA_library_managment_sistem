@@ -2,6 +2,7 @@ package com.library.managment.library_managment_sistem.service;
 
 import com.library.managment.library_managment_sistem.dto.BookDto;
 import com.library.managment.library_managment_sistem.entity.Book;
+import com.library.managment.library_managment_sistem.entity.Category;
 import com.library.managment.library_managment_sistem.mapper.BookMapper;
 import com.library.managment.library_managment_sistem.repositry.BookRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,6 +28,8 @@ public class BookService {
     public List<Book> searchBooks(String keyword) {
         return bookRepository.searchBooks(keyword);
     }
+    public List<Book> getBooksByCategory(Category category) {
+        return bookRepository.findByCategory(category);}
 
     public BookDto addBook(BookDto bookDto) {
         log.info("Adding a new book: {}", bookDto.getTitle());
@@ -35,6 +38,7 @@ public class BookService {
        // book.setCategory(bookDto.getCategory());
         return bookMapper.bookToBookDto(savedBook);
     }
+
     public BookDto getBookById(Long id) {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Book not found with id: " + id));
@@ -68,7 +72,6 @@ public class BookService {
 
         Book updatedBook = bookRepository.save(existingBook);
         return bookMapper.bookToBookDto(updatedBook);
-
     }
 
 }

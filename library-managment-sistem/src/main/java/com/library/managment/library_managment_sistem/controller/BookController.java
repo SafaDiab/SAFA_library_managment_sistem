@@ -2,6 +2,7 @@ package com.library.managment.library_managment_sistem.controller;
 
 import com.library.managment.library_managment_sistem.dto.BookDto;
 import com.library.managment.library_managment_sistem.entity.Book;
+import com.library.managment.library_managment_sistem.entity.Category;
 import com.library.managment.library_managment_sistem.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,6 +29,10 @@ public class BookController {
         List<Book> books = bookService.searchBooks(keyword);
         return ResponseEntity.ok(books);
     }
+
+    @GetMapping("/category")
+    public List<Book> getBooksByCategory(@RequestParam Category category) {
+        return bookService.getBooksByCategory(category);}
 
 @GetMapping
 public ResponseEntity<List<BookDto>> listBooks() {
