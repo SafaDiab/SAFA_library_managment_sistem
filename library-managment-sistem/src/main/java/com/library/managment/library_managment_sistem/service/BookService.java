@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+// jwt sistem güvenliği , sistem içinde integrasyon ekleme , isteklemele ekleme , Acess etkesi
 @Slf4j
 @Service
 public class BookService {
